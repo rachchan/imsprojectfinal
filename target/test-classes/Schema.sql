@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS `testdb`;
+USE `testdb`;
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (`customer_ID` int(11) NOT NULL AUTO_INCREMENT,`name` varchar(100) NOT NULL,`address` varchar(100) NOT NULL,`email` varchar(50) DEFAULT NULL,`password` varchar(30) DEFAULT NULL,`age` int(11) DEFAULT '17',`postcode` varchar(8) DEFAULT 'why',PRIMARY KEY (`customer_ID`));
+DROP TABLE IF EXISTS `game`;
+CREATE TABLE `game` (`product_ID` int(11) NOT NULL AUTO_INCREMENT,`title` varchar(100) NOT NULL,`quantity` int(11) NOT NULL,`price` decimal(7,2) NOT NULL,`age_rating` int(11) NOT NULL,PRIMARY KEY (`product_ID`));
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (`order_ID` int(11) NOT NULL AUTO_INCREMENT,`fk_customer_ID` int(11) NOT NULL,`placed` date DEFAULT NULL,`total` decimal(7,2) DEFAULT NULL,PRIMARY KEY (`order_ID`),KEY `fk_customer_ID` (`fk_customer_ID`),CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`fk_customer_ID`) REFERENCES `customer` (`customer_ID`));
+DROP TABLE IF EXISTS `orderline`;
+CREATE TABLE `orderline` (`line_ID` int(11) NOT NULL AUTO_INCREMENT,`fk_order_ID` int(11) NOT NULL,`fk_product_ID` int(11) NOT NULL,`qty_ordered` int(11) DEFAULT NULL,PRIMARY KEY (`line_ID`),KEY `fk_order_ID` (`fk_order_ID`),KEY `fk_product_ID` (`fk_product_ID`),CONSTRAINT `orderline_ibfk_1` FOREIGN KEY (`fk_order_ID`) REFERENCES `orders` (`order_ID`),CONSTRAINT `orderline_ibfk_2` FOREIGN KEY (`fk_product_ID`) REFERENCES `game` (`product_ID`));
