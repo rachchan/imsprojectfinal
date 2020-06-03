@@ -17,26 +17,53 @@ public class Ims {
 		String password = input.getInput();
 
 		RemoteDatabaseConnection connection = new RemoteDatabaseConnection(user, password);
-		
+
 		// Below needs to be similar to Garage project
-		// where different type of objects can be built and different inputs are required
+		// where different type of objects can be built and different inputs are
+		// required
 		// --------------------------
-		System.out.println("customer name:");
-		String name = input.getInput();
 
-		System.out.println("customer email:");
-		String email = input.getInput();
+		System.out.println("What action would you like to do? Choose from the following:");
+		for (Action action : Action.values()) {
+			System.out.println(action.name());
+		}
+		System.out.println("---");
 
-		System.out.println("customer address:");
-		String address = input.getInput();
+		Action selectedAction;
+		while (true) {
+			try {
+				String actionInput = input.getInput();
+				selectedAction = Action.valueOf(actionInput.toUpperCase());
+				break;
+			} catch (IllegalArgumentException e) {
+				System.out.println("Not a valid selection. Please re-enter");
+			}
+		}
 
-		Customer customer = new Customer(name, email, address);
-		// ----------------------------
-		
-		// With the object send it to the Dao and have it do the rest
-		CustomerDao customerDao = new CustomerDao(connection);
-		customerDao.insertCustomer(customer);
-		
+		System.out.println(selectedAction);
+
+		switch (selectedAction) {
+		case INSERT:
+			System.out.println("customer name:");
+			String name = input.getInput();
+
+			System.out.println("customer email:");
+			String email = input.getInput();
+
+			System.out.println("customer address:");
+			String address = input.getInput();
+
+			Customer customer = new Customer(name, email, address);
+			// ----------------------------
+
+			// With the object send it to the Dao and have it do the rest
+			CustomerDao customerDao = new CustomerDao(connection);
+			//
+			customerDao.insertCustomer(customer);
+
+			break;
+		}
+
 		// DONT FORGET TO CLOSE OFF CONNECTIONS
 		connection.closeConnection();
 	}
