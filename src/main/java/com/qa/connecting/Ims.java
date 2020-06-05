@@ -1,17 +1,22 @@
 package com.qa.connecting;
 
+import org.apache.log4j.Logger;
+
 import com.qa.connecting.dao.CustomerDao;
 import com.qa.connecting.dao.RemoteDatabaseConnection;
-import com.qa.connecting.model.Customer;
+
+import com.qa.connecting.model.Customers;
 import com.qa.connecting.utils.Input;
 
 public class Ims {
 
+	public static final Logger LOGGER = Logger.getLogger(Ims.class);
+	
 	Input input = new Input();
 
 	public void start() {
 
-		System.out.println("Database username: ");
+		System.out.println("DB username?");
 		String user = input.getInput();
 		System.out.println("Database password: ");
 		String password = input.getInput();
@@ -36,7 +41,7 @@ public class Ims {
 				selectedAction = Action.valueOf(actionInput.toUpperCase());
 				break;
 			} catch (IllegalArgumentException e) {
-				System.out.println("Not a valid selection. Please re-enter");
+				LOGGER.warn("Not a valid selection. Please re-enter");
 			}
 		}
 
@@ -44,22 +49,22 @@ public class Ims {
 
 		switch (selectedAction) {
 		case INSERT:
-			System.out.println("customer name:");
-			String name = input.getInput();
+			System.out.println("customer last name:");
+			String LastName = input.getInput();
 
-			System.out.println("customer email:");
-			String email = input.getInput();
+			System.out.println("customer first name:");
+			String FirstName = input.getInput();
 
 			System.out.println("customer address:");
-			String address = input.getInput();
+			String Address = input.getInput();
 
-			Customer customer = new Customer(name, email, address);
+			Customers customers = new Customers(LastName, FirstName, Address);
 			// ----------------------------
 
 			// With the object send it to the Dao and have it do the rest
 			CustomerDao customerDao = new CustomerDao(connection);
 			//
-			customerDao.insertCustomer(customer);
+			customerDao.insertCustomers(customers);
 
 			break;
 		}

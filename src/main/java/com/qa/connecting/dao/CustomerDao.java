@@ -1,6 +1,6 @@
 package com.qa.connecting.dao;
 
-import com.qa.connecting.model.Customer;
+import com.qa.connecting.model.Customers;
 
 public class CustomerDao {
 
@@ -10,9 +10,9 @@ public class CustomerDao {
 		this.databaseConnection = databaseConnection;
 	}
 
-	public void insertCustomer(Customer customer) {
-		String sql = "insert into customer(name, email, address) values ('" + customer.getName() + "', '"
-				+ customer.getEmail() + "', '" + customer.getAddress() + "');";
+	public void insertCustomers(Customers customers) {
+		String sql = "insert into customer(last name, firstname, address) values ('" + customers.getLastName() + "', '"
+				+ customers.getFirstName() + "', '" + customers.getAddress() + "');";
 
 		databaseConnection.sendUpdate(sql);
 	}
