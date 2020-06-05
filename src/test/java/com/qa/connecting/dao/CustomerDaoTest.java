@@ -26,8 +26,8 @@ public class CustomerDaoTest {
 	static DatabaseConnection databaseConnection;
 	static final String SCHEMA_LOCATION = "src\\test\\resources\\imsschema.sql";
 	static final String DATA_LOCATION = "src\\test\\resources\\imsdata.sql";
-	static final String CLEAR_LOCATION = "src\\test\\resources\\ClearDB.sql";
-	static final String DROP_LOCATION = "src\\test\\resources\\DropDB.sql";
+	static final String CLEAR_LOCATION = "src\\test\\resources\\imsclear.sql";
+	static final String DROP_LOCATION = "src\\test\\resources\\imsdrop.sql";
 	
 	private static void sendToDB(Connection connection, String fileLocation) {
 		try (BufferedReader br = new BufferedReader(new FileReader(fileLocation));) {
@@ -67,7 +67,7 @@ public class CustomerDaoTest {
 	@Test
 	public void test() throws SQLException {
 		CustomerDao customerdao = new CustomerDao(databaseConnection);
-		Customers test = new Customers("Chris", "Why do you care" ,"65 Zoo Lane");
+		Customers test = new Customers("Smith", "John" ,"65 Zoo Lane");
 		customerdao.insertCustomers(test);
 		
 		String query = "SELECT * FROM customers";
