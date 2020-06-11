@@ -1,5 +1,4 @@
-use imsdb;
-DELETE FROM orderline WHERE 1=1;
-DELETE FROM orders WHERE 1=1;
-DELETE FROM customers WHERE 1=1;
-DELETE FROM items WHERE 1=1;
+DELETE FROM orderline;
+DELETE FROM orders;
+DELETE FROM customers;
+DELETE FROM items;

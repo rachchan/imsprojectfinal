@@ -18,16 +18,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.qa.dao.CustomerDaoImpl;
+import com.qa.dao.DatabaseConnection;
 
-import com.qa.connecting.model.Customers;
+import com.qa.dto.Customers;
 
 public class CustomerDaoTest {
 	
 	static DatabaseConnection databaseConnection;
-	static final String SCHEMA_LOCATION = "src\\test\\resources\\imsschema.sql";
-	static final String DATA_LOCATION = "src\\test\\resources\\imsdata.sql";
-	static final String CLEAR_LOCATION = "src\\test\\resources\\imsclear.sql";
-	static final String DROP_LOCATION = "src\\test\\resources\\imsdrop.sql";
+	static final String SCHEMA_LOCATION = "src/test/resources/imsschema.sql";
+	static final String DATA_LOCATION = "src/test/resources/imsdata.sql";
+	static final String CLEAR_LOCATION = "src/test/resources/imsclear.sql";
+	static final String DROP_LOCATION = "src/test/resources/imsdrop.sql";
 	
 	private static void sendToDB(Connection connection, String fileLocation) {
 		try (BufferedReader br = new BufferedReader(new FileReader(fileLocation));) {
@@ -44,41 +46,44 @@ public class CustomerDaoTest {
 	
 	@BeforeClass
 	public static void init() throws SQLException {
-		sendToDB(DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306", "root", "root"), SCHEMA_LOCATION);
+		sendToDB(DriverManager.getConnection("jdbc:mysql://127.0.0.1", "root", "root"), SCHEMA_LOCATION);
 	}
 	
 	@Before
 	public void setup() {
-		databaseConnection = new TestingDatabaseConnection("root","root");
+		databaseConnection = new DatabaseConnection("user","youshallnotpass");
 		sendToDB(databaseConnection.getConnection(), DATA_LOCATION);
 	}
 	
 	@After
 	public void teardown() throws SQLException {
-		sendToDB(DriverManager.getConnection("jdbc:mysql://127.0.0.1/testdb:3306", "root", "root"),CLEAR_LOCATION);
-	}
+		sendToDB(DriverManager.getConnection("jdbc:mysql://127.0.0.1/testdb", "root", "root"),CLEAR_LOCATION);
+	}    
 	
 	@AfterClass
-	public static void finish() throws SQLException {
-		sendToDB(DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306", "root", "root"), DROP_LOCATION);
+	public static void drop() throws SQLException {
+		sendToDB(DriverManager.getConnection("jdbc:mysql://127.0.0.1/testdb", "root", "root"), DROP_LOCATION);
 		databaseConnection.closeConnection();
 	}
 
 	@Test
 	public void test() throws SQLException {
-		CustomerDao customerdao = new CustomerDao(databaseConnection);
-		Customers test = new Customers("Smith", "John" ,"65 Zoo Lane");
+		
+		
+		CustomerDaoImplement customerdao = new CustomerDaoImpl(databaseConnection);
+		Customers test = new Customers(0, "Smith", "John" ,"65 Zoo Lane");
 		customerdao.insertCustomers(test);
-		
+		//verify this works
 		String query = "SELECT * FROM customers";
-		
 		ResultSet rs = databaseConnection.sendQuery(query);
+		
+	
 		int count = 0;
 		while (rs.next()) {
 			count++;
 		}
 		
-		assertEquals(4, count);
+		assertEquals(5, count);
 	}
 
 }
