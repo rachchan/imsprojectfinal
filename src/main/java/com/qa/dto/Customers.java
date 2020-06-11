@@ -29,7 +29,7 @@ public class Customers {
 		this.FirstName = FirstName;
 	}
 	public Customers(Integer CustomerID, String LastName, String FirstName) {
-		this.CustomerID = 0;
+		this.CustomerID = CustomerID;
 		this.LastName = LastName;
 		this.FirstName = FirstName;
 	}
@@ -58,8 +58,9 @@ public class Customers {
 	public String getLastName() {
 		return LastName;
 	}
+	
 
-	public void setName(String LastName) {
+	public void setLastName(String LastName) {
 		this.LastName = LastName;
 	}
 

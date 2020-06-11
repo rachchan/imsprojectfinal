@@ -18,6 +18,11 @@ public class Items {
 		this.ItemName = ItemName;
 	}
 	
+	public Items(double Price, int ItemID) {
+		this.Price = Price;
+		this.ItemID = ItemID;
+	}
+	
 	public Items(String ItemName, double Price, int QuantityOrdered) {
 		this.ItemName = ItemName;
 		this.Price = Price;
@@ -25,7 +30,6 @@ public class Items {
 	}
 
 	public Items(int ItemID, String ItemName, double Price, int QuantityOrdered) { 
-		super();
 		this.ItemID = ItemID;
 		this.ItemName = ItemName;
 		this.Price = Price;
@@ -56,9 +60,10 @@ public class Items {
 		QuantityOrdered = quantityOrdered;
 	}
 
-	public void setItemID(int itemID) {
-		ItemID = itemID;
+	public int getItemID() {
+		return ItemID;
 	}
+	
 
 	@Override
 	public int hashCode() {
