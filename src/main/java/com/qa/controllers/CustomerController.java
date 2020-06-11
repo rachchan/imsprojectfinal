@@ -1,19 +1,17 @@
 package com.qa.controllers;
 
 
-import com.qa.connecting.utils.Action;
-import com.qa.connecting.utils.Input;
-import com.qa.dto.*;
-import com.qa.services.*;
+import com.qa.dto.Customers;
+import com.qa.services.CustomerServices;
+import com.qa.utils.Action;
+import com.qa.utils.Input;
 
 public class CustomerController {
 
 	private CustomerServices customerService;
-	private Input input;
 
-	public CustomerController(Input input, CustomerServices customerService) {
+	public CustomerController(CustomerServices customerService) {
 		this.customerService = customerService;
-		this.input = input;
 	}
 
 	public void run(Action action) {
@@ -39,57 +37,47 @@ public class CustomerController {
 		System.out.println("Please enter the following information: ");
 
 		System.out.println("Customer First Name");
-		String firstName = input.getInput();
+		String firstName = Input.getInput();
 
 		System.out.println("Customer Last Name");
-		String lastName = input.getInput();
+		String lastName = Input.getInput();
 
 		System.out.println("Customer Address");
-		String address = input.getInput();
+		String address = Input.getInput();
 		
 		Customers customer = new Customers(lastName, firstName, address);
 		customerService.createCustomer(customer);
-
+		System.out.println("Customer created: " + firstName + ", " + lastName + ", " + address);
 	}
 
 	protected void read() {
 		customerService.selectCustomers();
-		
 	}
 
 	protected void update() {
-		System.out.println("Customer first name: ");
-		String firstName = input.getInput();
+	
 		
-		System.out.println("Customer last name: ");
-		String lastName = input.getInput();
+		System.out.println("Customer ID: ");
+		int customerID = Input.getInt();
 
-		System.out.println("Customer new address: ");
-		String address = input.getInput();
+		System.out.println("New Address: ");
+		String address = Input.getInput();
 		
-		Customers customer = new Customers(lastName, firstName, address);
+		Customers customer = new Customers(customerID, address);
 		customerService.updateCustomer(customer);
-		System.out.println("Customer first name: " + firstName + ", New address: "+ address);
+		System.out.println("Customer ID " + customerID + "New address: "+ address);
 	}
 
 	protected void delete() {
 		System.out.println("Specify the customer you want to delete: ");
 		
-		System.out.println("Customer first name: ");
-		String firstName = input.getInput();
-		
-		System.out.println("Customer last name: ");
-		String lastName = input.getInput();
-
-		System.out.println("Customer new address: ");
-		String address = input.getInput();
 		
 		System.out.println("Customer ID: ");
-		int id = input.getInt();
+		int CustomerID = Input.getInt();
 		
-		Customers customer = new Customers(id, lastName, firstName, address);
-		customerService.deleteCustomers(id);
-		System.out.println(firstName + " has been deleted");
+		Customers customer = new Customers(CustomerID);
+		customerService.deleteCustomers(CustomerID);
+		System.out.println(customer.getCustomerID() + " has been deleted");
 		
 	}
 }

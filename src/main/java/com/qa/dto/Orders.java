@@ -4,39 +4,39 @@ import java.sql.Date;
 
 public class Orders {
 
-	private int OrderID = 0;
-	private int fk_CustomerID = 0;
-	private Date DatePlaced;
-	private double OrderTotal;
+	private int id = 0;
+	private int CustomerID = 0;
+	private Date DatePlaced = null;
+	private double OrderTotal = 0.0;
 	
 	public Orders() {
-		this.OrderID = 0;
-		this.fk_CustomerID = 0;
-		this.DatePlaced = null;
-		this.OrderTotal = 0.0;
 	}
-
-	public Orders(int OrderID, int CustomerID, Date DatePlaced, double OrderTotal) {
-		this.OrderID = OrderID;
-		this.setCustomerID(CustomerID);
+	
+	public Orders(int id) {
+		this.setId(id);
+	}
+	public Orders(int id, int CustomerID, Date DatePlaced, double OrderTotal) {
+		this.id = id;
+		this.CustomerID = CustomerID;
 		this.DatePlaced = DatePlaced;
 		this.OrderTotal = OrderTotal;
 	}
 
-	public int getOrderID() {
-		return OrderID;
+
+	public int getId() {
+		return id;
 	}
 
-	public void setOrderID(int orderID) {
-		OrderID = orderID;
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public int getCustomerID() {
-		return fk_CustomerID;
+		return CustomerID;
 	}
 
 	public void setCustomerID(int CustomerID) {
-		this.fk_CustomerID = CustomerID;
+		this.CustomerID = CustomerID;
 	}
 
 
@@ -62,7 +62,7 @@ public class Orders {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((DatePlaced == null) ? 0 : DatePlaced.hashCode());
-		result = prime * result + OrderID;
+		result = prime * result + id;
 		long temp;
 		temp = Double.doubleToLongBits(OrderTotal);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -83,12 +83,13 @@ public class Orders {
 				return false;
 		} else if (!DatePlaced.equals(other.DatePlaced))
 			return false;
-		if (OrderID != other.OrderID)
+		if (id != other.id)
 			return false;
 		if (Double.doubleToLongBits(OrderTotal) != Double.doubleToLongBits(other.OrderTotal))
 			return false;
 		return true;
 	}
+
 
 
 }

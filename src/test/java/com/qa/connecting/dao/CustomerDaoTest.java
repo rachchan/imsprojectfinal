@@ -18,14 +18,14 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.qa.dao.CustomerDaoImpl;
-import com.qa.dao.DatabaseConnection;
+import com.qa.dao.CustomerDaoImplTest;
+import com.qa.dao.DatabaseConnectionTest;
 
-import com.qa.dto.Customers;
+import com.qa.dto.CustomersTest;
 
 public class CustomerDaoTest {
 	
-	static DatabaseConnection databaseConnection;
+	static DatabaseConnectionTest databaseConnection;
 	static final String SCHEMA_LOCATION = "src/test/resources/imsschema.sql";
 	static final String DATA_LOCATION = "src/test/resources/imsdata.sql";
 	static final String CLEAR_LOCATION = "src/test/resources/imsclear.sql";
@@ -51,7 +51,7 @@ public class CustomerDaoTest {
 	
 	@Before
 	public void setup() {
-		databaseConnection = new DatabaseConnection("user","youshallnotpass");
+		databaseConnection = new DatabaseConnectionTest("root", "root");
 		sendToDB(databaseConnection.getConnection(), DATA_LOCATION);
 	}
 	
@@ -70,10 +70,10 @@ public class CustomerDaoTest {
 	public void test() throws SQLException {
 		
 		
-		CustomerDaoImplement customerdao = new CustomerDaoImpl(databaseConnection);
-		Customers test = new Customers(0, "Smith", "John" ,"65 Zoo Lane");
+		CustomerDaoImplTest customerdao = new CustomerDaoImplTest(databaseConnection);
+		CustomersTest test = new CustomersTest(0, "Smith", "John" ,"65 Zoo Lane");
 		customerdao.insertCustomers(test);
-		//verify this works
+
 		String query = "SELECT * FROM customers";
 		ResultSet rs = databaseConnection.sendQuery(query);
 		

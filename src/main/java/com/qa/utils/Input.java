@@ -1,4 +1,4 @@
-package com.qa.connecting.utils;
+package com.qa.utils;
 
 import java.util.Scanner;
 
@@ -6,14 +6,14 @@ import org.apache.log4j.Logger;
 
 public class Input {
 
-	private Scanner scanner = new Scanner(System.in);
+	private static Scanner scanner = new Scanner(System.in);
 	public static final Logger LOGGER = Logger.getLogger(Ims.class);
 	
-	public String getInput() {
+	public static String getInput() {
 		return scanner.nextLine();
 	}
 	
-	public double getDouble() {
+	public static double getDouble() {
 		double value;
 		while (true) {
 			try {
@@ -26,7 +26,7 @@ public class Input {
 	}
 	
 	
-	public int getInt() {
+	public static int getInt() {
 		int value;
 		
 		while (true) {

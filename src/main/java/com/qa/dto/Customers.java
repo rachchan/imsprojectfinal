@@ -2,12 +2,36 @@ package com.qa.dto;
 
 public class Customers {
 
-	private Integer CustomerID;
+	private Integer CustomerID = 0;
 	private String LastName;
 	private String FirstName;
 	private String Address;
 	
 	public Customers() {
+		this.CustomerID = 0;
+		this.LastName = null;
+		this.FirstName = null;
+		this.Address = null;
+	}
+	
+	public Customers(Integer CustomerID) {
+		this.CustomerID = CustomerID;
+	}
+	
+	public Customers(Integer CustomerID, String Address) {
+		this.CustomerID = CustomerID;
+		this.Address = Address;
+	}
+	
+	
+	public Customers(String LastName, String FirstName) {
+		this.LastName = LastName;
+		this.FirstName = FirstName;
+	}
+	public Customers(Integer CustomerID, String LastName, String FirstName) {
+		this.CustomerID = 0;
+		this.LastName = LastName;
+		this.FirstName = FirstName;
 	}
 	
 	public Customers(String LastName, String FirstName, String Address) {
@@ -54,6 +78,11 @@ public class Customers {
 	public void setAddress(String Address) {
 		this.Address = Address;
 	}
+	
+	public String getCustomer() {
+		return FirstName + " | " + LastName + " |" + Address;
+	}
+	
 
 	@Override
 	public int hashCode() {

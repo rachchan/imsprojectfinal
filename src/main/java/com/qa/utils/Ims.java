@@ -1,6 +1,6 @@
-package com.qa.connecting.utils;
+package com.qa.utils;
 
-
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import com.qa.controllers.CustomerController;
 import com.qa.dao.CustomerDaoImpl;
@@ -8,26 +8,29 @@ import com.qa.dao.DatabaseConnection;
 import com.qa.dto.Models;
 import com.qa.services.CustomerServices;
 
-
 public class Ims {
 
-	private Input input;
+	private DatabaseConnection databaseConnection;
+
 	public static final Logger LOGGER = Logger.getLogger(Ims.class);
-	
-	public Ims(Input input, DatabaseConnection databaseConnection) {
-		this.input = input;
+
+	public Ims(DatabaseConnection databaseConnection) {
+
+		this.setDatabaseConnection(databaseConnection);
+		LOGGER.setLevel(Level.INFO);
+		
 	}
 
 	public void start() {
-		
-		System.out.println("Would you like to create, read, update or delete?");
-		System.out.println("To exit, type [exit]");
- 
+		while (true) {
+			System.out.println("Would you like to create, read, update or delete?");
+			System.out.println("To exit, type [exit]");
+
 			Action selectedAction;
 
 			while (true) {
 				try {
-					String actionInput = input.getInput();
+					String actionInput = Input.getInput();
 					selectedAction = Action.valueOf(actionInput.toUpperCase());
 					System.out.println(selectedAction);
 					break;
@@ -44,7 +47,7 @@ public class Ims {
 						modelSelection += modelSelect.toString().toLowerCase() + ", ";
 					}
 					System.out.println(modelSelection);
-					String modelInput = input.getInput();
+					String modelInput = Input.getInput();
 					models = Models.valueOf(modelInput.toUpperCase());
 					System.out.println(models);
 					break;
@@ -55,20 +58,28 @@ public class Ims {
 
 			switch (models) {
 			case CUSTOMERS:
-				CustomerController controller = new CustomerController(input, new CustomerServices(new CustomerDaoImpl()));
+				CustomerController controller = new CustomerController(
+						new CustomerServices(new CustomerDaoImpl(databaseConnection)));
 				controller.run(selectedAction);
 				break;
 			case ORDERS:
-			
+
 				break;
 			case ITEMS:
-				
+
 				break;
 			default:
 				break;
 			}
-
-			DatabaseConnection.closeConnection();
 		}
+	}
+
+	public DatabaseConnection getDatabaseConnection() {
+		return databaseConnection;
+	}
+
+	public void setDatabaseConnection(DatabaseConnection databaseConnection) {
+		this.databaseConnection = databaseConnection;
+	}
 
 }

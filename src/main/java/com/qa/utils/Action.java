@@ -1,4 +1,4 @@
-package com.qa.connecting.utils;
+package com.qa.utils;
 
 import org.apache.log4j.Logger;
 

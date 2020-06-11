@@ -1,7 +1,7 @@
 package com.qa.services;
 
-import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -18,41 +18,28 @@ public class CustomerServices {
 	}
 	
 	public void createCustomer(Customers customer) {
-		try {
-			customerDao.create(customer);
-		} catch (SQLException e) {
-			LOGGER.error(e);
-		}
+		customerDao.create(customer);
 	}
 	
+
 	public void selectCustomers() {
-		try {
-			customerDao.selectAll();
-		} catch (SQLException e) {
-			LOGGER.error(e);
-		}
+		List<Customers> myCustomerList = new ArrayList();
+		myCustomerList = customerDao.selectAll();
 		
+		for(int x = 0; x < myCustomerList.size(); x++){
+			System.out.println(myCustomerList.get(x).getCustomer());
+		}
 		
 	}
 	
-	public void deleteCustomers(int id) {
-		try {
-			customerDao.delete(id);
-		} catch (SQLException e) {
-			LOGGER.error(e);
-		}
+	public void deleteCustomers(int CustomerID) {
+			customerDao.delete(CustomerID);
 	}
 
 	
 	public void updateCustomer(Customers customers) {
-		try {
 			customerDao.update(customers);
-		} catch (SQLException e) {
-			LOGGER.error(e);
-		}
 	}
-
-
 }
 	
 

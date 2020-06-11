@@ -6,8 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.log4j.Logger;
+
 import com.mysql.jdbc.Driver;
 import com.qa.connecting.exceptions.SqlStatementNotUnderstoodException;
+import com.qa.utils.Ims;
 
 
 
@@ -17,23 +20,34 @@ public class DatabaseConnection {
 	 * Connect to Database
 	 * 
 	 */
-	private static Connection connection;
+	public static final Logger LOGGER = Logger.getLogger(Ims.class);
+
+	private String user;
+	private String password;
+	private Connection connection = null;
 	
-	private static final String URL = "jdbc:mysql://127.0.0.1/imsdb";
+	public DatabaseConnection(String user, String password) {
+		this.setUser(user);
+		this.setPassword(password);
+	}
 	
-	private static final String USER = "user";
+	private void setUser(String user) {
+		this.user = user;
+	}
+	private void setPassword(String password) {
+		this.password = password;
+	}
 	
-	private static final String PASS = "youshallnotpass";
 	
 	/**
 	 * Get a connection to database
 	 * @return Connection object
 	 */
-	public static Connection getConnection() {
+	public Connection getConnection() {
 		
 		try {
 			DriverManager.registerDriver(new Driver());
-			return DriverManager.getConnection(URL, USER, PASS);
+			return DriverManager.getConnection("jdbc:mysql://127.0.0.1/imsdb", user, password);
 		} catch (SQLException ex) {
 			throw new RuntimeException("Error connecting to the database", ex);
 		}
@@ -62,7 +76,7 @@ public class DatabaseConnection {
 	}
 	
 	
-	public static void closeConnection() {
+	public void closeConnection() {
 		if(connection != null)
 			try {
 				connection.close();
@@ -70,7 +84,7 @@ public class DatabaseConnection {
 				System.out.println("Error occured when closing the connection");
 			}
 	}
-	
+
 	
 }
 
