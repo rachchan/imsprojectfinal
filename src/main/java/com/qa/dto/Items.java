@@ -17,6 +17,9 @@ public class Items {
 	public Items(String ItemName) {
 		this.ItemName = ItemName;
 	}
+	public Items(int ItemID) {
+		this.ItemID = ItemID;
+	}
 	
 	public Items(double Price, int ItemID) {
 		this.Price = Price;
@@ -62,6 +65,10 @@ public class Items {
 
 	public int getItemID() {
 		return ItemID;
+	}
+	
+	public String getItem() {
+		return ItemID + " |" + ItemName + "| " + Price + "| " + QuantityOrdered;
 	}
 	
 

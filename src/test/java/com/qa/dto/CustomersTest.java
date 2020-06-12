@@ -2,8 +2,6 @@ package com.qa.dto;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -19,22 +17,7 @@ public class CustomersTest {
 		customers = new Customers(5, "Thomas", "Sally");
 		other = new Customers(5, "Thomas", "Sally");
 	}
-	
-	@Test
-	public void settersTest() {
-		assertNotNull(customers.getCustomerID());
-		assertNotNull(customers.getLastName());
-		assertNotNull(customers.getFirstName());
-		
-		customers.setCustomerID(null);
-		assertNull(customers.getCustomerID());
-		customers.setLastName(null);
-		assertNull(customers.getLastName());
-		customers.setFirstName(null);
-		assertNull(customers.getFirstName());
-		
-		
-	}
+
 	
 	@Test
 	public void equalsWithNull() {
@@ -121,18 +104,6 @@ public class CustomersTest {
 		assertFalse(customers.equals(other));
 	}
 	
-	@Test
-	public void constructorWithoutId() {
-		Customers customers = new Customers("Tomasz", "Figgle");
-		assertNull(customers.getCustomerID());
-		assertNotNull(customers.getFirstName());
-		assertNotNull(customers.getLastName());
-	}
-	
 
-	@Test
-	public void toStringTest() {
-		String toString = "id:5 first name:Sally last name:Thomas";
-		assertEquals(toString, customers.toString());
-	}
+	
 }
